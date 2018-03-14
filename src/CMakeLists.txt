@@ -14,7 +14,9 @@ set(_SRCS
   qtpropertymanager.cpp
   qttreepropertybrowser.cpp
   qtvariantproperty.cpp
-  fileHandler.cpp
+#  fileHandler.cpp
+  DataBall.cpp
+  Vec3.cpp
   )
 
 file(GLOB _IMPL_HDRS *.h)

@@ -49,7 +49,7 @@
 #include "qttreepropertybrowser.h"
 #include "qtbuttonpropertybrowser.h"
 #include "qtgroupboxpropertybrowser.h"
-#include "fileHandler.h"
+#include "DataBall.h"
 
 
 int main(int argc, char **argv)
@@ -58,6 +58,9 @@ int main(int argc, char **argv)
 
   QWidget *w = new QWidget();
 
+  DataBall db = new DataBall();
+  db.loadData();
+  
   QString xCenter = "xCenter";
   QString yCenter = "yCenter";
   QString zCenter = "zCenter";
@@ -81,7 +84,6 @@ int main(int argc, char **argv)
   QtProperty *item1 = doubleManager->addProperty("X");
   // Set the value via the manager - pass in the property and the value
   doubleManager->setValue(item1, x);
-  
   // You can name your fields- this will be important so you know where
   // the data is coming from when you deal with signals- it's also important
   // to have unique names!

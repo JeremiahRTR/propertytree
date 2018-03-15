@@ -34,6 +34,8 @@ DataBall::DataBall()
   
   baseLinkFrame << "Frame 1" << "Frame 2" << "Frame 3";
   endEffectorFrame << "Open" << "Closed";
+  
+  threads = 8;
 }
 
 DataBall::~DataBall()
@@ -92,6 +94,7 @@ void DataBall::LoadData()
           baseLinkFrame   = in.readLine().trimmed().split(" ");
           endEffectorFrame= in.readLine().trimmed().split(" ");
         }
+        threads = in.readLine().trimmed().toInt();
     }
 
     file.close();
@@ -149,6 +152,8 @@ void DataBall::SaveData()
     for (QString r : endEffectorFrame)
       stream << r << " ";
     stream << endl;
+    
+    stream << threads << endl;
   }
   
 }

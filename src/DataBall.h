@@ -43,6 +43,8 @@ class DataBall {
     //Link Poses
     QStringList baseLinkFrame;
     QStringList endEffectorFrame;
+    
+    int threads;
   
 };
 

@@ -62,47 +62,115 @@ int main(int argc, char **argv)
   // get the data from a file
   db->LoadData();
   
-  QString xCenter = "xCenter";
-  QString yCenter = "yCenter";
-  QString zCenter = "zCenter";
-  QString xDimension = "xDimension";
-  QString yDimension = "yDimension";
-  QString zDimension = "zDimension";  
+  QString fileRobotURDF = "fileRobotURDF";
+  QString fileNodes = "fileNodes";
+  QString fileEdges = "fileEdges";
+  
+  QString enumViewMode = "enumViewMode";
+  QString enumLinkMeshMode = "enumLinkMeshMode";
+  QString boolvoxelVisiblity = "boolVoxelVisiblity";
+  QString intVoxelIndex = "intVoxelIndex";
+  QString roStringEntry = "roStringEntry";
+  
+  QString xCenter = "doubleXCenter";
+  QString yCenter = "doubleYCenter";
+  QString zCenter = "doubleZCenter";
+  QString xDimension = "doubleXDimension";
+  QString yDimension = "doubleYDimension";
+  QString zDimension = "doubleZDimension";  
+  
+  QString boolRegionVisible = "boolRegionVisible";
+  QString enumVoxelFrame = "enumVoxelFrame";
+  QString roStringVoxDim = "roStringVoxDim";
+  
+  QString enumBaseLinkFrame = "enumBaseLinkFrame";
+  QString enumEndEffectorFrame = "enumEndEffectorFrame";
+  
+  QString intThreads = "intThreads";
   
   // These are the controls for the double and the group
-  QtDoublePropertyManager *doubleManager = new QtDoublePropertyManager(w);
-  QtGroupPropertyManager *groupManager = new QtGroupPropertyManager(w);
+  QtBoolPropertyManager   *boolManager  = new QtBoolPropertyManager(w);
+  QtIntPropertyManager    *intManager   = new QtIntPropertyManager(w);
+  QtStringPropertyManager *stringManager= new QtStringPropertyManager(w);
+  QtDoublePropertyManager *doubleManager= new QtDoublePropertyManager(w);
+  QtEnumPropertyManager   *enumManager  = new QtEnumPropertyManager(w);
+  QtGroupPropertyManager  *groupManager = new QtGroupPropertyManager(w);  
 
+  // ---------------------------------------------------------------------------
+  QtProperty *fileInputsRegion = groupManager->addProperty("File Inputs");
+  // File - Robot URDF
+  // File - Nodes File
+  // File - Edges File
 
+  // ---------------------------------------------------------------------------
+  QtProperty *viewingRegion = groupManager->addProperty("Viewing");
+  
+  QtProperty *viewMode = enumManager->addProperty("View Mode");
+  viewMode->setInternalName(enumViewMode);
+  enumManager->setEnumNames(viewMode, db->viewMode);
+  viewingRegion->addSubProperty(viewMode);
+  
+  QtProperty *lMMode = enumManager->addProperty("Link Mesh Mode");
+  lMMode->setInternalName(enumLinkMeshMode);
+  enumManager->setEnumNames(lMMode, db->linkMeshMode);
+  viewingRegion->addSubProperty(lMMode);
+  
+  QtProperty *voxelVis = boolManager->addProperty("Voxel Visiblity");
+  boolManager->setValue(voxelVis, db->voxelVisible);
+  voxelVis->setInternalName(boolvoxelVisiblity);
+  viewingRegion->addSubProperty(voxelVis);
+  
+  QtProperty *voxelVisibility = intManager->addProperty("Index");
+  intManager->setValue(voxelVisibility, db->voxelVisible);
+  voxelVisibility->setInternalName(intVoxelIndex);
+  viewingRegion->addSubProperty(voxelVisibility);
+  
+  QtProperty *entry = stringManager->addProperty("Entry");
+  stringManager->setValue(entry, db->entryReadOnly);
+  entry->setInternalName(roStringEntry);
+  viewingRegion->addSubProperty(entry);
+  
+  // ---------------------------------------------------------------------------  
   QtProperty *voxelRegion = groupManager->addProperty("Voxel Region");
+  // File - Load Region
 
+  QtProperty *regionVis = boolManager->addProperty("Visiblity");
+  boolManager->setValue(regionVis, db->regionVisible);
+  regionVis->setInternalName(boolRegionVisible);
+  voxelRegion->addSubProperty(regionVis);
+  
+  QtProperty *voxelFrame = enumManager->addProperty("Frame");
+  voxelFrame->setInternalName(enumVoxelFrame);
+  enumManager->setEnumNames(voxelFrame, db->voxelFrame);
+  voxelRegion->addSubProperty(voxelFrame);
+  
+  ///------ VECTOR3
   // This is a top-level group field. We may want to make a mid-level group field
-  QtProperty *item0 = groupManager->addProperty("Center");
+  QtProperty *center = groupManager->addProperty("Center");
   
   // These are data fields
-  QtProperty *item1 = doubleManager->addProperty("X");
+  QtProperty *centerX = doubleManager->addProperty("X");
   // Set the value via the manager - pass in the property and the value
-  doubleManager->setValue(item1, db->centerVec3.x);
+  doubleManager->setValue(centerX, db->centerVec3.x);
   // You can name your fields- this will be important so you know where
   // the data is coming from when you deal with signals- it's also important
   // to have unique names!
-  item1->setInternalName(xCenter);
-  item0->addSubProperty(item1);
+  centerX->setInternalName(xCenter);
+  center->addSubProperty(centerX);
   
+  QtProperty *centerY = doubleManager->addProperty("Y");
+  doubleManager->setValue(centerY, db->centerVec3.y);
+  centerY->setInternalName(yCenter);
+  center->addSubProperty(centerY);
   
-  QtProperty *item2 = doubleManager->addProperty("Y");
-  doubleManager->setValue(item2, db->centerVec3.y);
-  item2->setInternalName(yCenter);
-  item0->addSubProperty(item2);
-  
-  
-  QtProperty *item3 = doubleManager->addProperty("Z");
-  doubleManager->setValue(item3, db->centerVec3.z);
-  item3->setInternalName(zCenter);
-  item0->addSubProperty(item3);
+  QtProperty *centerZ = doubleManager->addProperty("Z");
+  doubleManager->setValue(centerZ, db->centerVec3.z);
+  centerZ->setInternalName(zCenter);
+  center->addSubProperty(centerZ);
 
+  voxelRegion->addSubProperty(center);
 
-
+  ///------ VECTOR3
   // This is a top-level group field. We may want to make a mid-level group field
   QtProperty *dim = groupManager->addProperty("Dimensions");
   
@@ -113,38 +181,79 @@ int main(int argc, char **argv)
   // You can name your fields- this will be important so you know where
   // the data is coming from when you deal with signals- it's also important
   // to have unique names!
-  item1->setInternalName(xDimension);
+  centerX->setInternalName(xDimension);
   dim->addSubProperty(dimX);
-  
   
   QtProperty *dimY = doubleManager->addProperty("Y");
   doubleManager->setValue(dimY, db->dimensionsVec3.y);
   dimY->setInternalName(yDimension);
   dim->addSubProperty(dimY);
   
-  
   QtProperty *dimZ = doubleManager->addProperty("Z");
   doubleManager->setValue(dimZ, db->dimensionsVec3.z);
   dimZ->setInternalName(zDimension);
   dim->addSubProperty(dimZ);
-
-
-  voxelRegion->addSubProperty(item0);
+  
   voxelRegion->addSubProperty(dim);
+
+  QtProperty *voxDim = stringManager->addProperty("Voxel Dimensions");
+  QString output = QObject::tr("%1, %2, %3")
+                      .arg(QString::number(db->dimensionsVec3.x, 'f', 2))
+                      .arg(QString::number(db->dimensionsVec3.y, 'f', 2))
+                      .arg(QString::number(db->dimensionsVec3.z, 'f', 2));
+  stringManager->setValue(voxDim, output);
+  entry->setInternalName(roStringVoxDim);
+  voxelRegion->addSubProperty(voxDim);
+
+  // ---------------------------------------------------------------------------
+  QtProperty *linkRegion = groupManager->addProperty("LinkPoses");
+
+  QtProperty *blFrame  = enumManager->addProperty("Base Link Frame");
+  viewMode->setInternalName(enumBaseLinkFrame);
+  enumManager->setEnumNames(blFrame, db->baseLinkFrame);
+  linkRegion->addSubProperty(blFrame);
+  
+  QtProperty *eeFrame = enumManager->addProperty("End-effector Frame");
+  eeFrame->setInternalName(enumEndEffectorFrame);
+  enumManager->setEnumNames(eeFrame, db->endEffectorFrame);
+  linkRegion->addSubProperty(eeFrame);
+
+  // ---------------------------------------------------------------------------
+  // int number of threads
+  QtProperty *threads = intManager->addProperty("Threads");
+  intManager->setValue(threads, db->threads);
+  threads->setInternalName(intThreads);
 
 
   // This is how we edit the field
   QtDoubleSpinBoxFactory *doubleSpinBoxFactory = new QtDoubleSpinBoxFactory(w);
+  QtSpinBoxFactory *spinBoxFactory = new QtSpinBoxFactory(w);
+  QtEnumEditorFactory *comboBoxFactory = new QtEnumEditorFactory(w);
+  //~ QtLineEditFactory *lineEditFactory = new QtLineEditFactory(w);  
+  QtCheckBoxFactory *checkBoxFactory = new QtCheckBoxFactory(w);
   
   QtAbstractPropertyBrowser *editor1 = new QtTreePropertyBrowser();
   // Here we define the controls for the object- adding a factory to the object means that we can 
   // control this field and make changes to it.
   editor1->setFactoryForManager(doubleManager, doubleSpinBoxFactory);
+  editor1->setFactoryForManager(intManager, spinBoxFactory);
+  editor1->setFactoryForManager(enumManager, comboBoxFactory);
+  //~ editor1->setFactoryForManager(stringManager, lineEditFactory);
+  editor1->setFactoryForManager(boolManager, checkBoxFactory);
+  
+  editor1->addProperty(fileInputsRegion);
+  editor1->addProperty(viewingRegion);
   editor1->addProperty(voxelRegion);
+  editor1->addProperty(linkRegion);
+  editor1->addProperty(threads);
   
   // Notice no factory here - This becomes read-only.
   QtAbstractPropertyBrowser *editor2 = new QtTreePropertyBrowser();
+  editor2->addProperty(fileInputsRegion);
+  editor2->addProperty(viewingRegion);
   editor2->addProperty(voxelRegion);
+  editor2->addProperty(linkRegion);
+  editor2->addProperty(threads);
   
   // This is editable as well. We're using the doubleManager variable as the point of connection with
   // the factory. Anything with an attachment to that mananger obj means that it should react the same way
@@ -152,7 +261,16 @@ int main(int argc, char **argv)
   // Factory located inside fo qteditorfactory.cpp
   QtAbstractPropertyBrowser *editor3 = new QtGroupBoxPropertyBrowser();
   editor3->setFactoryForManager(doubleManager, doubleSpinBoxFactory);
+  editor3->setFactoryForManager(intManager, spinBoxFactory);
+  editor3->setFactoryForManager(enumManager, comboBoxFactory);
+  //~ editor3->setFactoryForManager(stringManager, lineEditFactory);
+  editor3->setFactoryForManager(boolManager, checkBoxFactory);
+  
+  editor3->addProperty(fileInputsRegion);
+  editor3->addProperty(viewingRegion);
   editor3->addProperty(voxelRegion);
+  editor3->addProperty(linkRegion); 
+  editor3->addProperty(threads);  
   
   QScrollArea *scroll3 = new QScrollArea();
   scroll3->setWidgetResizable(true);

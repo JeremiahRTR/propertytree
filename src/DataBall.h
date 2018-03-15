@@ -36,7 +36,7 @@ class DataBall {
     QString loadRegion;
     bool regionVisible;
     QStringList voxelFrame;
-    Dash::Vec3 centerVec3;
+    Dash::Vec3 positionVec3;
     Dash::Vec3 dimensionsVec3;
     QString voxelDimensionsReadOnly;
     

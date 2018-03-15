@@ -24,9 +24,9 @@ DataBall::DataBall()
   loadRegion = "/home/robot/robo1_region1.reg";
   regionVisible = true;
   voxelFrame << "Blue" << "Green" << "Black";
-  centerVec3.x = 1.0;
-  centerVec3.y = 2.0;
-  centerVec3.z = 3.0;
+  positionVec3.x = 1.0;
+  positionVec3.y = 2.0;
+  positionVec3.z = 3.0;
   dimensionsVec3.x = 4.0;
   dimensionsVec3.y = 5.0;
   dimensionsVec3.z = 6.0;
@@ -78,9 +78,9 @@ void DataBall::LoadData()
           regionVisible = (in.readLine() == "true");
           voxelFrame    = in.readLine().trimmed().split(" ");
           QStringList temp = in.readLine().trimmed().split(" ");
-          centerVec3.x = temp[0].toFloat();
-          centerVec3.y = temp[1].toFloat();
-          centerVec3.z = temp[2].toFloat();
+          positionVec3.x = temp[0].toFloat();
+          positionVec3.y = temp[1].toFloat();
+          positionVec3.z = temp[2].toFloat();
           
           temp = in.readLine().trimmed().split(" ");
           dimensionsVec3.x = temp[0].toFloat();
@@ -141,7 +141,7 @@ void DataBall::SaveData()
     for (QString r : voxelFrame)
       stream << r << " ";
     stream << endl;
-    stream << centerVec3.x << " " << centerVec3.y << " " << centerVec3.z << endl;
+    stream << positionVec3.x << " " << positionVec3.y << " " << positionVec3.z << endl;
     stream << dimensionsVec3.x << " " << dimensionsVec3.y << " " << dimensionsVec3.z << endl;
     stream << voxelDimensionsReadOnly<< endl;
     

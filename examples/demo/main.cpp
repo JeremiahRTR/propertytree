@@ -50,6 +50,9 @@
 #include "qtbuttonpropertybrowser.h"
 #include "qtgroupboxpropertybrowser.h"
 #include "DataBall.h"
+#include "filepathmanager.h"
+#include "fileeditfactory.h"
+#include "fileedit.h"
 
 
 int main(int argc, char **argv)
@@ -72,13 +75,14 @@ int main(int argc, char **argv)
   QString intVoxelIndex = "intVoxelIndex";
   QString roStringEntry = "roStringEntry";
   
-  QString xCenter = "doubleXCenter";
-  QString yCenter = "doubleYCenter";
-  QString zCenter = "doubleZCenter";
+  QString xPosition = "doubleXPosition";
+  QString yPosition = "doubleYPosition";
+  QString zPosition = "doubleZPosition";
   QString xDimension = "doubleXDimension";
   QString yDimension = "doubleYDimension";
   QString zDimension = "doubleZDimension";  
   
+  QString fileLoadRegion = "fileLoadRegion";
   QString boolRegionVisible = "boolRegionVisible";
   QString enumVoxelFrame = "enumVoxelFrame";
   QString roStringVoxDim = "roStringVoxDim";
@@ -95,12 +99,28 @@ int main(int argc, char **argv)
   QtDoublePropertyManager *doubleManager= new QtDoublePropertyManager(w);
   QtEnumPropertyManager   *enumManager  = new QtEnumPropertyManager(w);
   QtGroupPropertyManager  *groupManager = new QtGroupPropertyManager(w);  
+  FilePathManager *filePathManager = new FilePathManager;
 
   // ---------------------------------------------------------------------------
   QtProperty *fileInputsRegion = groupManager->addProperty("File Inputs");
-  // File - Robot URDF
-  // File - Nodes File
-  // File - Edges File
+  
+  QtProperty *robotURDF = filePathManager->addProperty("Robot URDF");
+  filePathManager->setValue(robotURDF, "main.urdf");
+  filePathManager->setInternalName(fileRobotURDF);
+  filePathManager->setFilter(robotURDF, "Robot files (*.urdf)");
+  fileInputsRegion->addSubProperty(robotURDF);
+  
+  QtProperty *robotNodes = filePathManager->addProperty("Nodes File");
+  filePathManager->setValue(robotNodes, "nodes.txt");
+  //~ filePathManager->setInternalName(fileNodes);
+  filePathManager->setFilter(robotNodes, "Nodes files (*.txt)");
+  fileInputsRegion->addSubProperty(robotNodes);
+  
+  QtProperty *robotEdges = filePathManager->addProperty("Edges File");
+  filePathManager->setValue(robotEdges, "edges.txt");
+  //~ filePathManager->setInternalName(fileNodes);
+  filePathManager->setFilter(robotEdges, "Edges files (*.txt)");
+  fileInputsRegion->addSubProperty(robotEdges);
 
   // ---------------------------------------------------------------------------
   QtProperty *viewingRegion = groupManager->addProperty("Viewing");
@@ -132,7 +152,12 @@ int main(int argc, char **argv)
   
   // ---------------------------------------------------------------------------  
   QtProperty *voxelRegion = groupManager->addProperty("Voxel Region");
-  // File - Load Region
+  
+  QtProperty *loadRegion = filePathManager->addProperty("Edges File");
+  filePathManager->setValue(loadRegion, "region.rgn");
+  filePathManager->setInternalName(fileLoadRegion);
+  //~ filePathManager->setFilter(loadRegion, "Edges files (*.txt)");
+  voxelRegion->addSubProperty(loadRegion);
 
   QtProperty *regionVis = boolManager->addProperty("Visiblity");
   boolManager->setValue(regionVis, db->regionVisible);
@@ -146,29 +171,29 @@ int main(int argc, char **argv)
   
   ///------ VECTOR3
   // This is a top-level group field. We may want to make a mid-level group field
-  QtProperty *center = groupManager->addProperty("Center");
+  QtProperty *position = groupManager->addProperty("Position");
   
   // These are data fields
-  QtProperty *centerX = doubleManager->addProperty("X");
+  QtProperty *positionX = doubleManager->addProperty("X");
   // Set the value via the manager - pass in the property and the value
-  doubleManager->setValue(centerX, db->centerVec3.x);
+  doubleManager->setValue(positionX, db->positionVec3.x);
   // You can name your fields- this will be important so you know where
   // the data is coming from when you deal with signals- it's also important
   // to have unique names!
-  centerX->setInternalName(xCenter);
-  center->addSubProperty(centerX);
+  positionX->setInternalName(xPosition);
+  position->addSubProperty(positionX);
   
-  QtProperty *centerY = doubleManager->addProperty("Y");
-  doubleManager->setValue(centerY, db->centerVec3.y);
-  centerY->setInternalName(yCenter);
-  center->addSubProperty(centerY);
+  QtProperty *positionY = doubleManager->addProperty("Y");
+  doubleManager->setValue(positionY, db->positionVec3.y);
+  positionY->setInternalName(yPosition);
+  position->addSubProperty(positionY);
   
-  QtProperty *centerZ = doubleManager->addProperty("Z");
-  doubleManager->setValue(centerZ, db->centerVec3.z);
-  centerZ->setInternalName(zCenter);
-  center->addSubProperty(centerZ);
+  QtProperty *positionZ = doubleManager->addProperty("Z");
+  doubleManager->setValue(positionZ, db->positionVec3.z);
+  positionZ->setInternalName(zPosition);
+  position->addSubProperty(positionZ);
 
-  voxelRegion->addSubProperty(center);
+  voxelRegion->addSubProperty(position);
 
   ///------ VECTOR3
   // This is a top-level group field. We may want to make a mid-level group field
@@ -181,7 +206,7 @@ int main(int argc, char **argv)
   // You can name your fields- this will be important so you know where
   // the data is coming from when you deal with signals- it's also important
   // to have unique names!
-  centerX->setInternalName(xDimension);
+  dimX->setInternalName(xDimension);
   dim->addSubProperty(dimX);
   
   QtProperty *dimY = doubleManager->addProperty("Y");
@@ -231,6 +256,8 @@ int main(int argc, char **argv)
   QtEnumEditorFactory *comboBoxFactory = new QtEnumEditorFactory(w);
   //~ QtLineEditFactory *lineEditFactory = new QtLineEditFactory(w);  
   QtCheckBoxFactory *checkBoxFactory = new QtCheckBoxFactory(w);
+  FileEditFactory *fileEditFactory = new FileEditFactory;
+  
   
   QtAbstractPropertyBrowser *editor1 = new QtTreePropertyBrowser();
   // Here we define the controls for the object- adding a factory to the object means that we can 
@@ -240,6 +267,7 @@ int main(int argc, char **argv)
   editor1->setFactoryForManager(enumManager, comboBoxFactory);
   //~ editor1->setFactoryForManager(stringManager, lineEditFactory);
   editor1->setFactoryForManager(boolManager, checkBoxFactory);
+  editor1->setFactoryForManager(filePathManager, fileEditFactory);
   
   editor1->addProperty(fileInputsRegion);
   editor1->addProperty(viewingRegion);

@@ -17,6 +17,9 @@ set(_SRCS
 #  fileHandler.cpp
   DataBall.cpp
   Vec3.cpp
+  fileedit.cpp
+  fileeditfactory.cpp
+  filepathmanager.cpp
   )
 
 file(GLOB _IMPL_HDRS *.h)

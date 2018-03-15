@@ -58,49 +58,80 @@ int main(int argc, char **argv)
 
   QWidget *w = new QWidget();
 
-  DataBall db = new DataBall();
-  db.loadData();
+  DataBall *db = new DataBall();
+  // get the data from a file
+  db->LoadData();
   
   QString xCenter = "xCenter";
   QString yCenter = "yCenter";
   QString zCenter = "zCenter";
+  QString xDimension = "xDimension";
+  QString yDimension = "yDimension";
+  QString zDimension = "zDimension";  
   
-  // Save Load Functionality ------------------------------------------- START
-  double x = loadData(xCenter);
-  double y = loadData(yCenter);
-  double z = loadData(zCenter);
-  // Save Load Functionality --------------------------------------------- END
-  
-  qDebug() << "Loaded Data is: " << x << ", " << y << ", " << z;
-
   // These are the controls for the double and the group
   QtDoublePropertyManager *doubleManager = new QtDoublePropertyManager(w);
   QtGroupPropertyManager *groupManager = new QtGroupPropertyManager(w);
 
+
+  QtProperty *voxelRegion = groupManager->addProperty("Voxel Region");
+
   // This is a top-level group field. We may want to make a mid-level group field
-  QtProperty *item0 = groupManager->addProperty("Double Land");
+  QtProperty *item0 = groupManager->addProperty("Center");
   
   // These are data fields
   QtProperty *item1 = doubleManager->addProperty("X");
   // Set the value via the manager - pass in the property and the value
-  doubleManager->setValue(item1, x);
+  doubleManager->setValue(item1, db->centerVec3.x);
   // You can name your fields- this will be important so you know where
   // the data is coming from when you deal with signals- it's also important
   // to have unique names!
-  item1->setPropertyName(xCenter);
+  item1->setInternalName(xCenter);
   item0->addSubProperty(item1);
   
   
   QtProperty *item2 = doubleManager->addProperty("Y");
-  doubleManager->setValue(item2, y);
-  item2->setPropertyName(yCenter);
+  doubleManager->setValue(item2, db->centerVec3.y);
+  item2->setInternalName(yCenter);
   item0->addSubProperty(item2);
   
   
   QtProperty *item3 = doubleManager->addProperty("Z");
-  doubleManager->setValue(item3, z);
-  item3->setPropertyName(zCenter);
+  doubleManager->setValue(item3, db->centerVec3.z);
+  item3->setInternalName(zCenter);
   item0->addSubProperty(item3);
+
+
+
+  // This is a top-level group field. We may want to make a mid-level group field
+  QtProperty *dim = groupManager->addProperty("Dimensions");
+  
+  // These are data fields
+  QtProperty *dimX = doubleManager->addProperty("X");
+  // Set the value via the manager - pass in the property and the value
+  doubleManager->setValue(dimX, db->dimensionsVec3.x);
+  // You can name your fields- this will be important so you know where
+  // the data is coming from when you deal with signals- it's also important
+  // to have unique names!
+  item1->setInternalName(xDimension);
+  dim->addSubProperty(dimX);
+  
+  
+  QtProperty *dimY = doubleManager->addProperty("Y");
+  doubleManager->setValue(dimY, db->dimensionsVec3.y);
+  dimY->setInternalName(yDimension);
+  dim->addSubProperty(dimY);
+  
+  
+  QtProperty *dimZ = doubleManager->addProperty("Z");
+  doubleManager->setValue(dimZ, db->dimensionsVec3.z);
+  dimZ->setInternalName(zDimension);
+  dim->addSubProperty(dimZ);
+
+
+  voxelRegion->addSubProperty(item0);
+  voxelRegion->addSubProperty(dim);
+
 
   // This is how we edit the field
   QtDoubleSpinBoxFactory *doubleSpinBoxFactory = new QtDoubleSpinBoxFactory(w);
@@ -109,20 +140,20 @@ int main(int argc, char **argv)
   // Here we define the controls for the object- adding a factory to the object means that we can 
   // control this field and make changes to it.
   editor1->setFactoryForManager(doubleManager, doubleSpinBoxFactory);
-  editor1->addProperty(item0);
-
+  editor1->addProperty(voxelRegion);
+  
   // Notice no factory here - This becomes read-only.
   QtAbstractPropertyBrowser *editor2 = new QtTreePropertyBrowser();
-  editor2->addProperty(item0);
-
+  editor2->addProperty(voxelRegion);
+  
   // This is editable as well. We're using the doubleManager variable as the point of connection with
   // the factory. Anything with an attachment to that mananger obj means that it should react the same way
   // as everything else with that same factory. 
   // Factory located inside fo qteditorfactory.cpp
   QtAbstractPropertyBrowser *editor3 = new QtGroupBoxPropertyBrowser();
   editor3->setFactoryForManager(doubleManager, doubleSpinBoxFactory);
-  editor3->addProperty(item0);
-
+  editor3->addProperty(voxelRegion);
+  
   QScrollArea *scroll3 = new QScrollArea();
   scroll3->setWidgetResizable(true);
   scroll3->setWidget(editor3);

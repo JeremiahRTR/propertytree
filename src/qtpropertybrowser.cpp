@@ -67,6 +67,7 @@ public:
     QString m_statusTip;
     QString m_whatsThis;
     QString m_name;
+    QString m_internalName;
       
     bool m_enabled;
     bool m_modified;
@@ -243,6 +244,11 @@ QString QtProperty::propertyName() const
     return d_ptr->m_name;
 }
 
+QString QtProperty::internalName() const
+{
+    return d_ptr->m_internalName;
+}
+
 /*!
     Returns whether the property is enabled.
 
@@ -368,6 +374,22 @@ void QtProperty::setPropertyName(const QString &text)
         return;
 
     d_ptr->m_name = text;
+    propertyChanged();
+}
+
+/*!
+    \fn void QtProperty::setInternalName(const QString &name)
+
+    Sets the property's internal name to the given \a name.
+
+    \sa propertyName()
+*/
+void QtProperty::setInternalName(const QString &text)
+{
+    if (d_ptr->m_internalName == text)
+        return;
+
+    d_ptr->m_internalName = text;
     propertyChanged();
 }
 

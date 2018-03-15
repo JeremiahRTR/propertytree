@@ -173,11 +173,11 @@ void QtDoubleSpinBoxFactoryPrivate::slotPropertyChanged(QtProperty *property, do
         }
     }
     
-    qDebug() << "slotPropertyChanged - " << property->propertyName();
+    qDebug() << "slotPropertyChanged - " << property->internalName();
     
     // This would be where we hand off the data to the rest of the world
     // right now it just dumps it to a file on the hard drive so it can be "remembered"
-    saveData(property->propertyName(), value);
+    //~ saveData(property->propertyName(), value);
     
 }
 

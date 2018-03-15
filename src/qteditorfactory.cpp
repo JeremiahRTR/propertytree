@@ -59,8 +59,6 @@
 #include <QPainter>
 #include <QtCore/QMap>
 
-#include "fileHandler.h"
-
 // Debug stuff
 #include <QMessageBox>
 #include <QObject>

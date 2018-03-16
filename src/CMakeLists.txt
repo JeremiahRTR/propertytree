@@ -6,20 +6,19 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(_SRCS
-  qtbuttonpropertybrowser.cpp
-  qteditorfactory.cpp
-  qtgroupboxpropertybrowser.cpp
-  qtpropertybrowser.cpp
-  qtpropertybrowserutils.cpp
-  qtpropertymanager.cpp
-  qttreepropertybrowser.cpp
-  qtvariantproperty.cpp
-#  fileHandler.cpp
+  QtButtonPropertyBrowser.cpp
+  QtEditorFactory.cpp
+  QtGroupBoxPropertyBrowser.cpp
+  QtPropertyBrowser.cpp
+  QtPropertyBrowserUtils.cpp
+  QtPropertyManager.cpp
+  QtTreePropertyBrowser.cpp
+  QtVariantProperty.cpp
   DataBall.cpp
   Vec3.cpp
-  fileedit.cpp
-  fileeditfactory.cpp
-  filepathmanager.cpp
+  FileEdit.cpp
+  FileEditFactory.cpp
+  FilePathManager.cpp
   )
 
 file(GLOB _IMPL_HDRS *.h)
@@ -29,7 +28,7 @@ set(_UI_FORMS
   )
 
 set(_RESOURCES
-  qtpropertybrowser.qrc
+  QtPropertyBrowser.qrc
   )
   
 QT5_WRAP_UI(_UI_SRCS ${_UI_FORMS})

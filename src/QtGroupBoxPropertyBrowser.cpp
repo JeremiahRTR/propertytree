@@ -38,7 +38,7 @@
 ****************************************************************************/
 
 
-#include "qtgroupboxpropertybrowser.h"
+#include "QtGroupBoxPropertyBrowser.h"
 #include <QtCore/QSet>
 #include <QGridLayout>
 #include <QLabel>
@@ -312,15 +312,12 @@ void QtGroupBoxPropertyBrowserPrivate::propertyRemoved(QtBrowserItem *index)
         removeRow(parentItem->layout, row);
     } else {
         WidgetItem *par = parentItem->parent;
-        QWidget *w = 0;
         QGridLayout *l = 0;
         int oldRow = -1;
         if (!par) {
-            w = q_ptr;
             l = m_mainLayout;
             oldRow = m_children.indexOf(parentItem);
         } else {
-            w = par->groupBox;
             l = par->layout;
             oldRow = par->children.indexOf(parentItem);
             if (hasHeader(par))
@@ -533,4 +530,4 @@ void QtGroupBoxPropertyBrowser::itemChanged(QtBrowserItem *item)
 QT_END_NAMESPACE
 #endif
 
-#include "moc_qtgroupboxpropertybrowser.cpp"
+#include "moc_QtGroupBoxPropertyBrowser.cpp"

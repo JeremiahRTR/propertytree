@@ -41,7 +41,7 @@
 #ifndef QTPROPERTYMANAGER_H
 #define QTPROPERTYMANAGER_H
 
-#include "qtpropertybrowser.h"
+#include "QtPropertyBrowser.h"
 #include <QLineEdit>
 
 #if QT_VERSION >= 0x040400

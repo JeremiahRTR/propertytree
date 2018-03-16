@@ -21,8 +21,8 @@
 **
 ****************************************************************************/
 
-#include "fileeditfactory.h"
-#include "fileedit.h"
+#include "FileEditFactory.h"
+#include "FileEdit.h"
 
 FileEditFactory::~FileEditFactory()
 {

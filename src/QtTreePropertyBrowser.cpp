@@ -38,7 +38,7 @@
 ****************************************************************************/
 
 
-#include "qttreepropertybrowser.h"
+#include "QtTreePropertyBrowser.h"
 #include <QtCore/QSet>
 #include <QIcon>
 #include <QTreeWidget>
@@ -1074,5 +1074,5 @@ void QtTreePropertyBrowser::editItem(QtBrowserItem *item)
 QT_END_NAMESPACE
 #endif
 
-#include "moc_qttreepropertybrowser.cpp"
-#include "qttreepropertybrowser.moc"
+#include "moc_QtTreePropertyBrowser.cpp"
+#include "QtTreePropertyBrowser.moc"

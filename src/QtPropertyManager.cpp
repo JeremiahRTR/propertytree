@@ -38,8 +38,8 @@
 ****************************************************************************/
 
 
-#include "qtpropertymanager.h"
-#include "qtpropertybrowserutils_p.h"
+#include "QtPropertyManager.h"
+#include "QtPropertyBrowserUtils_p.h"
 #include <QtCore/QDateTime>
 #include <QtCore/QLocale>
 #include <QtCore/QMap>
@@ -6643,5 +6643,5 @@ void QtCursorPropertyManager::uninitializeProperty(QtProperty *property)
 QT_END_NAMESPACE
 #endif
 
-#include "moc_qtpropertymanager.cpp"
-#include "qtpropertymanager.moc"
+#include "moc_QtPropertyManager.cpp"
+#include "QtPropertyManager.moc"

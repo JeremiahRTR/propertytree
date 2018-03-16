@@ -38,7 +38,7 @@
 ****************************************************************************/
 
 
-#include "qtpropertybrowser.h"
+#include "QtPropertyBrowser.h"
 #include <QtCore/QSet>
 #include <QtCore/QMap>
 #include <QtGui/QIcon>
@@ -1546,7 +1546,7 @@ void QtAbstractPropertyBrowserPrivate::slotPropertyDataChanged(QtProperty *prope
     edit or a combobox) holding its value. A property can have zero or
     more subproperties.
 
-    \image qtpropertybrowser.png
+    \image QtPropertyBrowser.png
 
     The top level properties can be retrieved using the
     properties() function. To traverse each property's
@@ -1607,7 +1607,7 @@ void QtAbstractPropertyBrowserPrivate::slotPropertyDataChanged(QtProperty *prope
         editor->addProperty(property2);
         editor->addProperty(property3);
     \endcode
-    \o  \image qtpropertybrowser-duplicate.png
+    \o  \image QtPropertyBrowser-duplicate.png
     \endtable
 
     The addProperty() function returns a QtBrowserItem that uniquely
@@ -2045,4 +2045,4 @@ void QtAbstractPropertyBrowser::setCurrentItem(QtBrowserItem *item)
 QT_END_NAMESPACE
 #endif
 
-#include "moc_qtpropertybrowser.cpp"
+#include "moc_QtPropertyBrowser.cpp"

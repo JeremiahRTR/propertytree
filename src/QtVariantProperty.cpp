@@ -38,9 +38,9 @@
 ****************************************************************************/
 
 
-#include "qtvariantproperty.h"
-#include "qtpropertymanager.h"
-#include "qteditorfactory.h"
+#include "QtVariantProperty.h"
+#include "QtPropertyManager.h"
+#include "QtEditorFactory.h"
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 #include <QtCore/QDate>
@@ -2359,4 +2359,4 @@ void QtVariantEditorFactory::disconnectPropertyManager(QtVariantPropertyManager 
 QT_END_NAMESPACE
 #endif
 
-#include "moc_qtvariantproperty.cpp"
+#include "moc_QtVariantProperty.cpp"

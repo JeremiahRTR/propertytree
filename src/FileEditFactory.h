@@ -24,8 +24,8 @@
 #ifndef FILEEDITFACTORY_H
 #define FILEEDITFACTORY_H
 
-#include "qtpropertybrowser.h"
-#include "filepathmanager.h"
+#include "QtPropertyBrowser.h"
+#include "FilePathManager.h"
 
 class FileEdit;
 

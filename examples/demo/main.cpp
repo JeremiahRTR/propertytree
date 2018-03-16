@@ -44,15 +44,15 @@
 #include <QLabel>
 #include <QIcon>
 #include <QMap>
-#include "qtpropertymanager.h"
-#include "qteditorfactory.h"
-#include "qttreepropertybrowser.h"
-#include "qtbuttonpropertybrowser.h"
-#include "qtgroupboxpropertybrowser.h"
+#include "QtPropertyManager.h"
+#include "QtEditorFactory.h"
+#include "QtTreePropertyBrowser.h"
+#include "QtButtonPropertyBrowser.h"
+#include "QtGroupBoxPropertyBrowser.h"
 #include "DataBall.h"
-#include "filepathmanager.h"
-#include "fileeditfactory.h"
-#include "fileedit.h"
+#include "FilePathManager.h"
+#include "FileEditFactory.h"
+#include "FileEdit.h"
 
 
 int main(int argc, char **argv)

@@ -4,7 +4,7 @@ INCLUDEPATH += .
 
 QT += widgets
 
-include(../../src/qtpropertybrowser.pri)
+include(../../src/QtPropertyBrowser.pri)
 # Input
 SOURCES += main.cpp
 RESOURCES += demo.qrc

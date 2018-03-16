@@ -38,7 +38,7 @@
 ****************************************************************************/
 
 
-#include "qtbuttonpropertybrowser.h"
+#include "QtButtonPropertyBrowser.h"
 #include <QtCore/QSet>
 #include <QtCore/QTimer>
 #include <QtCore/QMap>
@@ -623,4 +623,4 @@ bool QtButtonPropertyBrowser::isExpanded(QtBrowserItem *item) const
 QT_END_NAMESPACE
 #endif
 
-#include "moc_qtbuttonpropertybrowser.cpp"
+#include "moc_QtButtonPropertyBrowser.cpp"

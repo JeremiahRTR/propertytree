@@ -38,9 +38,9 @@
 ****************************************************************************/
 
 #include <QApplication>
-#include "qtvariantproperty.h"
-#include "qteditorfactory.h"
-#include "qttreepropertybrowser.h"
+#include "QtVariantProperty.h"
+#include "QtEditorFactory.h"
+#include "QtTreePropertyBrowser.h"
 
 class VariantManager : public QtVariantPropertyManager
 {

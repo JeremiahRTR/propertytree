@@ -41,7 +41,7 @@
 #ifndef QTEDITORFACTORY_H
 #define QTEDITORFACTORY_H
 
-#include "qtpropertymanager.h"
+#include "QtPropertyManager.h"
 
 #if QT_VERSION >= 0x040400
 QT_BEGIN_NAMESPACE

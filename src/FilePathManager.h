@@ -24,7 +24,7 @@
 #ifndef FILEPATHMANAGER_H
 #define FILEPATHMANAGER_H
 
-#include "qtpropertybrowser.h"
+#include "QtPropertyBrowser.h"
 #include <QMap>
 
 class FilePathManager : public QtAbstractPropertyManager

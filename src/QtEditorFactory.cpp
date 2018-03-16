@@ -38,8 +38,8 @@
 ****************************************************************************/
 
 
-#include "qteditorfactory.h"
-#include "qtpropertybrowserutils_p.h"
+#include "QtEditorFactory.h"
+#include "QtPropertyBrowserUtils_p.h"
 #include <QSpinBox>
 #include <QScrollBar>
 #include <QComboBox>
@@ -2723,5 +2723,5 @@ QT_END_NAMESPACE
 
 
 
-#include "moc_qteditorfactory.cpp"
-#include "qteditorfactory.moc"
+#include "moc_QtEditorFactory.cpp"
+#include "QtEditorFactory.moc"

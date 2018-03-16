@@ -40,9 +40,9 @@
 #include <QApplication>
 #include <QDate>
 #include <QLocale>
-#include "qtpropertymanager.h"
-#include "qtvariantproperty.h"
-#include "qttreepropertybrowser.h"
+#include "QtPropertyManager.h"
+#include "QtVariantProperty.h"
+#include "QtTreePropertyBrowser.h"
 
 int main(int argc, char **argv)
 {
